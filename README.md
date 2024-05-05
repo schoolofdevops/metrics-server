@@ -7,7 +7,8 @@ Metrics Server collects resource metrics from Kubelets and exposes them in Kuber
 for use by [Horizontal Pod Autoscaler] and [Vertical Pod Autoscaler]. Metrics API can also be accessed by `kubectl top`,
 making it easier to debug autoscaling pipelines.
 
-Metrics Server is not meant for non-autoscaling purposes. For example, don't use it to forward metrics to monitoring solutions, or as a source of monitoring solution metrics. In such cases please collect metrics from Kubelet `/metrics/resource` endpoint directly.
+> [!CAUTION]
+> Metrics Server is meant only for autoscaling purposes. For example, don't use it to forward metrics to monitoring solutions, or as a source of monitoring solution metrics. In such cases please collect metrics from Kubelet `/metrics/resource` endpoint directly.
 
 Metrics Server offers:
 
@@ -33,7 +34,7 @@ Don't use Metrics Server when you need:
 - An accurate source of resource usage metrics
 - Horizontal autoscaling based on other resources than CPU/Memory
 
-For unsupported use cases, check out full monitoring solutions like Prometheus.
+For unsupported use cases, check out full monitoring solutions like [Prometheus](https://github.com/prometheus/prometheus).
 
 [Horizontal Autoscaling]: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 [Vertical Autoscaling]: https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler/
@@ -93,7 +94,8 @@ On Kubernetes v1.19-1.21:
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability.yaml
 ```
 
-Note that this configuration **requires** having a cluster with at least 2 nodes on which Metrics Server can be scheduled.
+>[!NOTE]
+> This configuration **requires** having a cluster with at least 2 nodes on which Metrics Server can be scheduled.
 
 Also, to maximize the efficiency of this highly available configuration, it is **recommended** to add the `--enable-aggregator-routing=true` CLI flag to the kube-apiserver so that requests sent to Metrics Server are load balanced between the 2 instances.
 
